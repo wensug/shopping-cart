@@ -3,7 +3,7 @@ import item2 from "../images/bread.png";
 import item3 from "../images/milk.png";
 import item4 from "../images/soup.png";
 
-import { ADD_TO_CART } from "./actions/actionsTypes";
+import { ADD_TO_CART, REMOVE_ITEM, ADD_QUANTITY, SUB_QUANTITY } from "./actions/actionsTypes";
 
 const initState = {
   items: [
@@ -37,6 +37,7 @@ const initState = {
 };
 const reducer = (state = initState, action) => {
   switch (action.type) {
+    //Products component
     case ADD_TO_CART:
       let addedItem = state.items.find(item => item.id === action.id);
       let existed_item = state.addedItems.find(item => action.id === item.id);
@@ -49,7 +50,7 @@ const reducer = (state = initState, action) => {
         };
       } else {
         addedItem.quantity = 1;
-        //calculating total
+        //calculating the total
         console.log(addedItem)
         let newTotal = state.total + addedItem.price;
         return {
@@ -59,7 +60,16 @@ const reducer = (state = initState, action) => {
         };
         
       }
-    
+      // Cart Component
+    case REMOVE_ITEM:
+      let itemRemove = state.addedItems.find(item => action.id === item.id)
+      let newItems = state.addedItems.filter(item => action.id !== item.id)
+      let newTotal = state.total - (itemRemove.price * itemRemove.quantity)
+      return{
+        ...state,
+        addedItems: newItems,
+        total: newTotal
+      }
     default:
       return state;
   }
