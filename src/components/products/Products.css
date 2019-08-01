@@ -35,7 +35,7 @@
   }
   
   .card-text {
-    padding: 1em 2em;
+    padding: 0.5em 1em;
   }
 
   @media screen and (max-width: 768px) {

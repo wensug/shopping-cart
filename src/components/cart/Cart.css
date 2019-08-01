@@ -1,0 +1,13 @@
+
+ .up-down {
+    font-size: 2rem;
+ }
+ .button-xs {
+    background-color:#004777;
+    color: white;
+    border: 1px transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9em;
+  }
+ 
