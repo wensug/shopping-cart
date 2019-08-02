@@ -7,7 +7,6 @@ import {
   addQuantity,
   subQuantity
 } from "../../redux/actions/actions";
-// import Checkout from "../checkout/Checkout";
 
 class Cart extends React.Component {
   handleRemoveItem(id) {
@@ -69,12 +68,16 @@ class Cart extends React.Component {
         <div className="row">
           <h3 className="row-title">You have ordered:</h3>
           <div className="card-container">{addedItems}</div>
-          <div className="btn-checkout">
+          <div>
+            <h4>
+              <label>
+                <b>Total: {this.props.total.toFixed(2)}$</b>
+              </label>
+            </h4>
             <NavLink to="/checkout">
-                <button>Checkout</button>
+              <button className="btn-checkout">Checkout</button>
             </NavLink>
           </div>
-          {/* <h3><label><b>Total: {this.props.total}$</b></label></h3> */}
         </div>
 
         {/* <Checkout /> */}
@@ -87,15 +90,20 @@ const mapStateToProps = state => {
   return {
     items: state.addedItems,
     total: state.total
-
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeItem: id => {dispatch(removeItem(id))},
-    addQuantity: id => {dispatch(addQuantity(id))},
-    subQuantity: id => {dispatch(subQuantity(id))}
+    removeItem: id => {
+      dispatch(removeItem(id));
+    },
+    addQuantity: id => {
+      dispatch(addQuantity(id));
+    },
+    subQuantity: id => {
+      dispatch(subQuantity(id));
+    }
   };
 };
 

@@ -1,0 +1,12 @@
+.card-checkout {
+    background-color: white;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 50%;
+    justify-content: center;
+    text-align: center; 
+    margin: 2em;
+    padding: 1em;
+    border: 4px transparent;
+    border-radius: 4px;
+}

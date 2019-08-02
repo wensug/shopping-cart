@@ -1,8 +1,8 @@
-
  .arrow {
     font-size: 2rem;
  }
  .button-xs {
+    cursor: pointer;
     background-color:#004777;
     color: white;
     border: 1px transparent;
@@ -11,3 +11,11 @@
     font-size: 0.9em;
   }
  
+.btn-checkout{
+    background-color:#C44536;
+    color: white;
+    border: 1px transparent;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.2em;
+}

@@ -1,17 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
+import "./Checkout.css"
 // import DisplayTotal from "../displayTotal/DisplayTotal";
 const url =
   "http://www.apilayer.net/api/live?access_key=40f7bdc3457f5be0ee6613fdcbee91a7";
 
 class Checkout extends React.Component {
-    state = {
-        currentCurrency: { name: "USD", value: 1.0 },
-        allCurrencies: {},
-        currenciesAllow: []
-      };
-
-   
+  state = {
+    currentCurrency: { name: "USD", value: 1.0 },
+    allCurrencies: {},
+    currenciesAllow: ["USD", "EUR", "GBP"]
+  };
 
   componentDidMount() {
     fetch(url)
@@ -25,27 +24,41 @@ class Checkout extends React.Component {
       });
   }
 
+  changeCurrency(e) {
+        let selectedCurrency = e.target.value;
+        let currencies = this.state.allCurrencies;
+        // return currencies.find((currency) => (currency.includes(selectedCurrency)))
+        console.log(currencies);
+    }
+    
   render() {
     return (
       <div className="section">
-        <div className="container">
-          <h1>Please select currency</h1>
-          {/* <select> 
+        <div className="row">
+        <div className="card-checkout">
+        <h1>Total</h1>
+          <div className="event-box list">
+            <h2><label>Select Currency:</label></h2>
+            <select onChange={(e) => this.changeCurrency(e)}>
+                {
+                    this.state.currenciesAllow.map(currency => {
+                        return (
+                            <option>{currency}</option>
+                        );
+                    })
 
-            { this.state.allCurrencies.map(currency => {
-                return (
-                  <option value={currency.quotes}>{currency} </option>
-                );
-              })
-            }    
-        </select> */}
-             <label>
-              <b>
-                 Total: $ {(this.props.total).toFixed(2) * this.state.currentCurrency.value};
-               </b>
-             </label>
+                }
+            </select>
+          </div>
+
+          <h3>
+            <b>
+              Total: $ {this.props.total.toFixed(2) * this.state.currentCurrency.value}
+            </b>
+          </h3>
+        </div>
+        </div>
       </div>
-    </div>
     );
   }
 }
@@ -58,3 +71,4 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Checkout);
+
