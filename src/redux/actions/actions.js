@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_ITEM, ADD_QUANTITY, SUB_QUANTITY } from "./actionsTypes"
+import { ADD_TO_CART, REMOVE_ITEM, ADD_QUANTITY, SUB_QUANTITY, OPEN_CHECKOUT  } from "./actionsTypes"
 
 export const addToCart = (id) => {
   return {
@@ -25,6 +25,12 @@ export const subQuantity = (id) => {
   return {
     type: SUB_QUANTITY,
     id
+  }
+}
+
+export const openCheckout = () => {
+  return {
+    type: OPEN_CHECKOUT
   }
 }
 

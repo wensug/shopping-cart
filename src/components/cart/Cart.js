@@ -1,13 +1,25 @@
 import React from "react";
 import "./Cart.css";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { removeItem, addQuantity, subQuantity } from "../../redux/actions/actions";
+import { NavLink } from "react-router-dom";
+import {
+  removeItem,
+  addQuantity,
+  subQuantity
+} from "../../redux/actions/actions";
+// import Checkout from "../checkout/Checkout";
 
 class Cart extends React.Component {
-  
-    handleRemoveItem(id) {
-        this.props.removeItem(id);
+  handleRemoveItem(id) {
+    this.props.removeItem(id);
+  }
+
+  handleAddQuantity(id) {
+    this.props.addQuantity(id);
+  }
+
+  handleSubQuantity(id) {
+    this.props.subQuantity(id);
   }
   render() {
     let addedItems = this.props.items.length ? (
@@ -26,12 +38,18 @@ class Cart extends React.Component {
                 <b>Quantity: {item.quantity}</b>
               </p>
               <div className="arrow">
-                <Link to="/cart">
-                  <i class="fas fa-sort-up" />
-                </Link>
-                <Link to="/cart">
-                  <i class="fas fa-sort-down" />
-                </Link>
+                <NavLink to="/cart">
+                  <i
+                    class="fas fa-sort-up"
+                    onClick={() => this.handleAddQuantity(item.id)}
+                  />
+                </NavLink>
+                <NavLink to="/cart">
+                  <i
+                    class="fas fa-sort-down"
+                    onClick={() => this.handleSubQuantity(item.id)}
+                  />
+                </NavLink>
               </div>
               <button
                 onClick={() => this.handleRemoveItem(item.id)}
@@ -51,7 +69,10 @@ class Cart extends React.Component {
         <div className="row">
           <h3 className="row-title">You have ordered:</h3>
           <div className="card-container">{addedItems}</div>
+          <h3><label><b>Total: {this.props.total}$</b></label></h3>
         </div>
+
+        {/* <Checkout /> */}
       </div>
     );
   }
@@ -59,15 +80,17 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    items: state.addedItems
+    items: state.addedItems,
+    total: state.total
+
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeItem: id => {
-      dispatch(removeItem(id));
-    }
+    removeItem: id => {dispatch(removeItem(id))},
+    addQuantity: id => {dispatch(addQuantity(id))},
+    subQuantity: id => {dispatch(subQuantity(id))}
   };
 };
 
