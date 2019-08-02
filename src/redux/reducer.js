@@ -44,7 +44,6 @@ const reducer = (state = initState, action) => {
       let existed_item = state.addedItems.find(item => action.id === item.id);
       if (existed_item) {
         addedItem.quantity += 1;
-        console.log(addedItem)
         return {
           ...state,
           total: state.total + addedItem.price
@@ -52,7 +51,6 @@ const reducer = (state = initState, action) => {
       } else {
         addedItem.quantity = 1;
         //calculating the total
-        console.log(addedItem)
         let newTotal = state.total + addedItem.price;
         return {
           ...state,
