@@ -18,7 +18,7 @@ class Products extends React.Component {
                         </div>
                         <div className="card-text">
                             <span className="card-title">{item.title}</span>
-                            <p><b>Price: {item.price}$</b></p>
+                            <p><b>Price: {item.price} $</b></p>
                             <button className="button-xs" onClick={()=>this.handleClick(item.id)}>Add to Cart</button>
                         </div>
                  </div>

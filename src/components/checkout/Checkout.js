@@ -1,62 +1,80 @@
-import React from "react";
-import { connect } from "react-redux";
-import "./Checkout.css"
-// import DisplayTotal from "../displayTotal/DisplayTotal";
+import React from 'react';
+import { connect } from 'react-redux';
+import './Checkout.css';
+import { currencyFoundInAPI } from './../../utils/checkoutHelper.js';
 const url =
-  "http://www.apilayer.net/api/live?access_key=40f7bdc3457f5be0ee6613fdcbee91a7";
+  'http://www.apilayer.net/api/live?access_key=40f7bdc3457f5be0ee6613fdcbee91a7';
 
 class Checkout extends React.Component {
   state = {
-    currentCurrency: { name: "USD", value: 1.0 },
-    allCurrencies: {},
-    currenciesAllow: ["USD", "EUR", "GBP"]
+    currentCurrency: { name: 'USD', value: 1.0 },
+    allCurrencies: [],
+    currenciesAllow: ['USD', 'EUR', 'GBP']
   };
+
+  changeCurrentCurrency(e) {
+    const { value } = e.target;
+    const found = currencyFoundInAPI(value, this.state.allCurrencies);
+    if (found) {
+      this.setState({
+        currentCurrency: {
+          name: found.name,
+          value: found.value
+        }
+      });
+    }
+  }
 
   componentDidMount() {
     fetch(url)
       .then(res => res.json())
       .then(response => {
-        console.log("response", response);
+        const formatedArr = Object.entries(response.quotes).map(
+          ([name, value]) => {
+            name = name.replace(/USD/, '');
+            return {
+              name,
+              value
+            };
+          }
+        );
         this.setState({
-          allCurrencies: response.quotes
+          allCurrencies: formatedArr
         });
-        console.log("AFTER FETCH", this.state);
       });
   }
 
-  changeCurrency(e) {
-        let selectedCurrency = e.target.value;
-        let currencies = this.state.allCurrencies;
-        // return currencies.find((currency) => (currency.includes(selectedCurrency)))
-        console.log(currencies);
-    }
-    
   render() {
     return (
       <div className="section">
         <div className="row">
-        <div className="card-checkout">
-        <h1>Total</h1>
-          <div className="event-box list">
-            <h2><label>Select Currency:</label></h2>
-            <select onChange={(e) => this.changeCurrency(e)}>
-                {
-                    this.state.currenciesAllow.map(currency => {
-                        return (
-                            <option>{currency}</option>
-                        );
-                    })
+          <div className="card-checkout">
+            <h1>Total</h1>
+            <div className="event-box list">
+              <h2>
+                <label>Select Currency:</label>
+              </h2>
+              <select onChange={e => this.changeCurrentCurrency(e)}>
+                {this.state.currenciesAllow.map(currency => {
+                  return (
+                    <option
+                      key={currency}
+                      value={currency}
+                      onClick={e => this.changeCurrentCurrency(e)}
+                    >
+                      {currency}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
 
-                }
-            </select>
+            <h3>
+              <b>
+                Total: {(this.props.total * this.state.currentCurrency.value).toFixed(2)}
+              </b>
+            </h3>
           </div>
-
-          <h3>
-            <b>
-              Total: $ {this.props.total.toFixed(2) * this.state.currentCurrency.value}
-            </b>
-          </h3>
-        </div>
         </div>
       </div>
     );
@@ -71,4 +89,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Checkout);
-

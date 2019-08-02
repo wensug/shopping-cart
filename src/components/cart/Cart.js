@@ -31,7 +31,7 @@ class Cart extends React.Component {
             <div className="card-text">
               <span className="title">{item.title}</span>
               <p>
-                <b>Price: {item.price}$</b>
+                <b>Price: {item.price} $</b>
               </p>
               <p>
                 <b>Quantity: {item.quantity}</b>
@@ -71,7 +71,7 @@ class Cart extends React.Component {
           <div>
             <h4>
               <label>
-                <b>Total: {this.props.total.toFixed(2)}$</b>
+                <b>Total: {this.props.total.toFixed(2)} $</b>
               </label>
             </h4>
             <NavLink to="/checkout">
