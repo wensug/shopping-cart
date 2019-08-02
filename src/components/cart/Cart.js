@@ -40,13 +40,13 @@ class Cart extends React.Component {
               <div className="arrow">
                 <NavLink to="/cart">
                   <i
-                    class="fas fa-sort-up"
+                    className="fas fa-sort-up"
                     onClick={() => this.handleAddQuantity(item.id)}
                   />
                 </NavLink>
                 <NavLink to="/cart">
                   <i
-                    class="fas fa-sort-down"
+                    className="fas fa-sort-down"
                     onClick={() => this.handleSubQuantity(item.id)}
                   />
                 </NavLink>
@@ -62,14 +62,19 @@ class Cart extends React.Component {
         );
       })
     ) : (
-      <p>There are not item in the basket</p>
+      <p>There are not items in the basket</p>
     );
     return (
       <div className="section">
         <div className="row">
           <h3 className="row-title">You have ordered:</h3>
           <div className="card-container">{addedItems}</div>
-          <h3><label><b>Total: {this.props.total}$</b></label></h3>
+          <div className="btn-checkout">
+            <NavLink to="/checkout">
+                <button>Checkout</button>
+            </NavLink>
+          </div>
+          {/* <h3><label><b>Total: {this.props.total}$</b></label></h3> */}
         </div>
 
         {/* <Checkout /> */}
